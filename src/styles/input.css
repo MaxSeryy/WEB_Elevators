@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .brand-heading {
+        @apply text-slate-900 dark:text-slate-100 mb-40;
+        font-family: 'Inter', sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        /* line-height: 1.2; */
+    }
+
+    .brand-normal {
+        @apply mb-4 text-slate-900 dark:text-slate-100;
+        font-family: 'Inter', sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .brand-normal-a {
+        @apply mb-4 text-slate-900 text-brand-accent dark:text-brand-accent;
+        font-family: 'Inter', sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .brand-small {
+        @apply text-slate-900 dark:text-slate-100;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .brand-small-a {
+        @apply text-brand-accent dark:text-brand-accent;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .brand-small-red {
+        @apply text-brand-door-open dark:text-brand-door-open;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .brand-small-green {
+        @apply text-brand-door-closed dark:text-brand-door-closed;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .card {
+        @apply bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
+        @apply dark:text-slate-100;
+    }
+
+    .numbers {
+        @apply bg-white dark:bg-slate-700 rounded-xl py-4 px-2 sm:px-4 flex flex-col items-center gap-3;
+    }
+
+    .number {
+        @apply w-8 h-8 flex items-center justify-center text-lg;
+    }
+
+    .number-a {
+        @apply w-8 h-8 bg-blue-500 text-white rounded flex items-center justify-center text-lg font-medium shadow;
+    }
+
+    .sidebar {
+        @apply w-64 bg-brand-panel dark:bg-slate-800 flex-col justify-between hidden md:flex
+    }
+}

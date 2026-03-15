@@ -1,0 +1,18 @@
+{
+  "name": "l2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/index.html",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/assets/output.css --minify",
+    "watch:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/assets/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
