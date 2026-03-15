@@ -73,4 +73,92 @@
     .sidebar {
         @apply w-64 bg-brand-panel dark:bg-slate-800 flex-col justify-between hidden md:flex
     }
+
+    .mobile-backdrop {
+        @apply fixed inset-0 bg-slate-900/45 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden z-40;
+    }
+
+    .mobile-backdrop.open {
+        @apply opacity-100 pointer-events-auto;
+    }
+
+    .mobile-sidebar {
+        @apply fixed inset-y-0 left-0 w-72 max-w-[86vw] bg-brand-panel dark:bg-slate-800 z-50 md:hidden flex flex-col justify-between;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .chart-shell {
+        @apply flex items-stretch gap-3 md:gap-6;
+        --chart-height: 320px;
+    }
+
+    .chart-y-column {
+        @apply shrink-0 w-14 md:w-16;
+        position: relative;
+        height: var(--chart-height);
+        padding-left: 14px;
+    }
+
+    .chart-y-title {
+        @apply text-xs md:text-sm text-slate-700 dark:text-slate-200;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        writing-mode: vertical-rl;
+        transform: translateY(-50%) rotate(180deg);
+        white-space: nowrap;
+        letter-spacing: 0.02em;
+        margin: 0;
+    }
+
+    .chart-y-scale {
+        @apply flex-1 w-full flex flex-col justify-between text-[11px] md:text-xs text-slate-700 dark:text-slate-300 text-right pr-1;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .chart-y-scale li {
+        line-height: 1;
+    }
+
+    .chart-scroll-wrap {
+        @apply min-w-0 flex-1 flex flex-col;
+    }
+
+    .chart-scroll-area {
+        @apply overflow-x-auto overflow-y-hidden rounded-xl;
+        cursor: grab;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        touch-action: pan-x;
+    }
+
+    .chart-scroll-area:active {
+        cursor: grabbing;
+    }
+
+    .chart-scroll-area.dragging {
+        cursor: grabbing;
+        user-select: none;
+    }
+
+    .chart-scroll-area::-webkit-scrollbar {
+        display: none;
+    }
+
+    .chart-scroll-content {
+        @apply min-w-[920px] pr-2;
+        height: var(--chart-height);
+    }
+
+    .chart-x-title {
+        @apply mt-3 text-xs md:text-sm text-center text-slate-700 dark:text-slate-200;
+    }
 }

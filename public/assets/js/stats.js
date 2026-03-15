@@ -1,6 +1,17 @@
 window.addEventListener('DOMContentLoaded', function () {
   var htmlElement = document.documentElement;
   var chart = null;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartScrollLeft = 0;
+  var labels = [
+    '00:00', '01:00', '02:00', '03:00',
+    '04:00', '05:00', '06:00', '07:00',
+    '08:00', '09:00', '10:00', '11:00',
+    '12:00', '13:00', '14:00', '15:00',
+    '16:00', '17:00', '18:00', '19:00',
+    '20:00', '21:00', '22:00', '23:00'
+  ];
 
   function getChartColors() {
     var isDark = htmlElement.classList.contains('dark');
@@ -20,16 +31,11 @@ window.addEventListener('DOMContentLoaded', function () {
     var colors = getChartColors();
 
     chart.options.scales.x.ticks.color = colors.textColor;
-    chart.options.scales.x.title.color = colors.textColor;
     chart.options.scales.x.grid.color = colors.gridColor;
     chart.options.scales.x.grid.borderColor = colors.gridBorderColor;
 
-    chart.options.scales.y.ticks.color = colors.textColor;
-    chart.options.scales.y.title.color = colors.textColor;
     chart.options.scales.y.grid.color = colors.gridColor;
     chart.options.scales.y.grid.borderColor = colors.gridBorderColor;
-
-    chart.options.plugins.legend.labels.color = colors.textColor;
     chart.update();
   }
 
@@ -37,11 +43,57 @@ window.addEventListener('DOMContentLoaded', function () {
     window.AppTheme.initThemeToggle({
       onThemeChange: applyChartTheme,
     });
+    window.AppTheme.initMobileSidebar();
   }
 
   var canvas = document.getElementById('loadChart');
+  var chartScroll = document.getElementById('chart-scroll');
+  var chartContent = document.getElementById('chart-content');
   if (!canvas || typeof Chart === 'undefined') {
     return;
+  }
+
+  function initDragScroll(container) {
+    if (!container) {
+      return;
+    }
+
+    container.addEventListener('mousedown', function (event) {
+      if (event.button !== 0) {
+        return;
+      }
+
+      isDragging = true;
+      dragStartX = event.clientX;
+      dragStartScrollLeft = container.scrollLeft;
+      container.classList.add('dragging');
+      event.preventDefault();
+    });
+
+    container.addEventListener('mousemove', function (event) {
+      if (!isDragging) {
+        return;
+      }
+
+      var delta = event.clientX - dragStartX;
+      container.scrollLeft = dragStartScrollLeft - delta;
+    });
+
+    function stopDragging() {
+      isDragging = false;
+      container.classList.remove('dragging');
+    }
+
+    container.addEventListener('mouseleave', stopDragging);
+    container.addEventListener('mouseup', stopDragging);
+    window.addEventListener('mouseup', stopDragging);
+  }
+
+  initDragScroll(chartScroll);
+
+  if (chartContent) {
+    var minChartWidth = Math.max(920, labels.length * 62);
+    chartContent.style.minWidth = minChartWidth + 'px';
   }
 
   var colors = getChartColors();
@@ -49,14 +101,7 @@ window.addEventListener('DOMContentLoaded', function () {
   chart = new Chart(canvas.getContext('2d'), {
     type: 'line',
     data: {
-      labels: [
-        '00:00', '01:00', '02:00', '03:00',
-        '04:00', '05:00', '06:00', '07:00',
-        '08:00', '09:00', '10:00', '11:00',
-        '12:00', '13:00', '14:00', '15:00',
-        '16:00', '17:00', '18:00', '19:00',
-        '20:00', '21:00', '22:00', '23:00'
-      ],
+      labels: labels,
       datasets: [
         {
           label: 'Навантаження %',
@@ -76,13 +121,9 @@ window.addEventListener('DOMContentLoaded', function () {
         y: {
           beginAtZero: true,
           max: 100,
-          title: {
-            display: true,
-            text: 'Навантаження (%)',
-            color: colors.textColor,
-          },
           ticks: {
-            color: colors.textColor,
+            display: false,
+            stepSize: 20,
           },
           grid: {
             display: true,
@@ -90,15 +131,19 @@ window.addEventListener('DOMContentLoaded', function () {
             borderColor: colors.gridBorderColor,
             lineWidth: 1,
           },
+          border: {
+            display: false,
+          },
         },
         x: {
-          title: {
-            display: true,
-            text: 'Час (години)',
-            color: colors.textColor,
-          },
           ticks: {
             color: colors.textColor,
+            autoSkip: false,
+            maxRotation: 0,
+            minRotation: 0,
+            font: {
+              size: 11,
+            },
           },
           grid: {
             display: true,
@@ -110,6 +155,7 @@ window.addEventListener('DOMContentLoaded', function () {
       },
       plugins: {
         legend: {
+          display: false,
           labels: {
             color: colors.textColor,
           },

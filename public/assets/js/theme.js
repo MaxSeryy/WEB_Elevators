@@ -149,7 +149,53 @@
     return { setTheme: setTheme };
   }
 
+  function initMobileSidebar() {
+    var openBtn = document.getElementById('mobile-menu-toggle');
+    var closeBtn = document.getElementById('mobile-menu-close');
+    var sidebar = document.getElementById('mobile-sidebar');
+    var backdrop = document.getElementById('mobile-sidebar-backdrop');
+
+    if (!openBtn || !sidebar || !backdrop) {
+      return;
+    }
+
+    function setOpen(isOpen) {
+      sidebar.classList.toggle('open', isOpen);
+      backdrop.classList.toggle('open', isOpen);
+      sidebar.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      document.body.classList.toggle('overflow-hidden', isOpen);
+    }
+
+    openBtn.addEventListener('click', function () {
+      setOpen(true);
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        setOpen(false);
+      });
+    }
+
+    backdrop.addEventListener('click', function () {
+      setOpen(false);
+    });
+
+    sidebar.addEventListener('click', function (event) {
+      var clickedLink = event.target.closest('a');
+      if (clickedLink) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    });
+  }
+
   window.AppTheme = {
     initThemeToggle: initThemeToggle,
+    initMobileSidebar: initMobileSidebar,
   };
 })();
