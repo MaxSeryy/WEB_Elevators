@@ -114,7 +114,7 @@
 
     .chart-shell {
         @apply flex items-stretch gap-3 md:gap-6;
-        --chart-height: 320px;
+        --chart-height: clamp(320px, 66vh, 760px);
     }
 
     .chart-y-column {

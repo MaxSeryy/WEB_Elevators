@@ -35,9 +35,9 @@
       </div>
     </div>
 
-    <div class="p-6">
+    <!-- <div class="p-6">
       <a href="#" class="brand-normal">ПК версія</a>
-    </div>
+    </div> -->
   </aside>
 
   <aside class="sidebar">
@@ -51,18 +51,18 @@
         </ul>
       </nav>
     </div>
-    <div class="p-8">
+    <!-- <div class="p-8">
       <a href="#" class="brand-normal">Мобільна версія</a>
-    </div>
+    </div> -->
   </aside>
 
   <div class="flex-1 flex flex-col h-full overflow-y-auto">
-    <header class="flex items-center px-8 pt-8 pb-4 md:p-8">
+    <header class="flex items-center px-8 pt-8 pb-0 md:p-8">
       <button id="mobile-menu-toggle"
-        class="md:hidden w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 duration-300"
+        class="md:hidden w-11 h-11 bg-sky-500 text-slate-900 rounded-md flex items-center justify-center shadow-sm"
         aria-label="Відкрити меню">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-7">
+          class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
         </svg>
       </button>
@@ -80,9 +80,19 @@
       </button>
     </header>
 
-    <main class="px-6 md:px-12 pb-12 flex-1 max-w-6xl mx-auto w-full">
+    <main class="px-6 pt-2 md:pt-0 md:px-12 pb-12 flex-1 max-w-6xl mx-auto w-full">
       <section class="mb-12">
-        <h2 class="brand-normal mb-6">Статистика навантаження ліфтів</h2>
+        <div class="mt-6 mb-8 md:mb-6 flex items-center justify-center gap-3 flex-wrap text-center">
+          <h2 class="brand-normal mb-0">Статистика навантаження для ліфту:</h2>
+          <label for="elevator-select" class="sr-only">Оберіть номер ліфту</label>
+          <select id="elevator-select"
+            class="h-11 rounded-lg border border-slate-400 dark:border-slate-600 bg-white dark:bg-slate-700 px-4 text-base text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-accent">
+            <option value="1">Ліфт №1</option>
+            <option value="2">Ліфт №2</option>
+            <option value="3">Ліфт №3</option>
+            <option value="4">Ліфт №4</option>
+          </select>
+        </div>
 
         <div class="bg-slate-300 dark:bg-slate-800 rounded-3xl p-4 md:p-8 shadow-sm">
           <div class="chart-shell">
