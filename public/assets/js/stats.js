@@ -4,6 +4,7 @@ window.addEventListener('DOMContentLoaded', function () {
   var isDragging = false;
   var dragStartX = 0;
   var dragStartScrollLeft = 0;
+  var elevatorSelect = document.getElementById('elevator-select');
   var labels = [
     '00:00', '01:00', '02:00', '03:00',
     '04:00', '05:00', '06:00', '07:00',
@@ -12,6 +13,24 @@ window.addEventListener('DOMContentLoaded', function () {
     '16:00', '17:00', '18:00', '19:00',
     '20:00', '21:00', '22:00', '23:00'
   ];
+  var elevatorSeries = {
+    '1': [2, 0, 0, 0, 0, 6, 32, 28, 12, 5, 3, 2, 12, 10, 4, 2, 22, 45, 42, 12, 4, 2, 0, 0],
+    '2': [0, 0, 0, 0, 1, 3, 12, 18, 26, 24, 16, 10, 14, 18, 16, 12, 20, 31, 28, 17, 10, 4, 1, 0],
+    '3': [1, 0, 0, 0, 2, 8, 24, 34, 38, 30, 18, 12, 20, 26, 24, 18, 25, 39, 44, 32, 21, 9, 2, 1],
+    '4': [0, 0, 0, 0, 1, 4, 10, 16, 20, 22, 24, 28, 30, 27, 25, 23, 20, 18, 16, 14, 9, 5, 2, 0],
+  };
+
+  function getSelectedElevatorId() {
+    if (!elevatorSelect) {
+      return '1';
+    }
+
+    return elevatorSelect.value in elevatorSeries ? elevatorSelect.value : '1';
+  }
+
+  function getSelectedSeries() {
+    return elevatorSeries[getSelectedElevatorId()] || elevatorSeries['1'];
+  }
 
   function getChartColors() {
     var isDark = htmlElement.classList.contains('dark');
@@ -36,6 +55,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
     chart.options.scales.y.grid.color = colors.gridColor;
     chart.options.scales.y.grid.borderColor = colors.gridBorderColor;
+    chart.update();
+  }
+
+  function updateChartByElevator() {
+    if (!chart) {
+      return;
+    }
+
+    var selectedId = getSelectedElevatorId();
+    var selectedSeries = getSelectedSeries();
+
+    chart.data.datasets[0].label = 'Навантаження ліфт №' + selectedId + ' (%)';
+    chart.data.datasets[0].data = selectedSeries;
     chart.update();
   }
 
@@ -104,8 +136,8 @@ window.addEventListener('DOMContentLoaded', function () {
       labels: labels,
       datasets: [
         {
-          label: 'Навантаження %',
-          data: [2, 0, 0, 0, 0, 6, 32, 28, 12, 5, 3, 2, 12, 10, 4, 2, 22, 45, 42, 12, 4, 2, 0, 0],
+          label: 'Навантаження ліфт №' + getSelectedElevatorId() + ' (%)',
+          data: getSelectedSeries(),
           borderColor: 'rgb(59, 130, 246)',
           backgroundColor: 'rgba(59, 130, 246, 0.25)',
           tension: 0.4,
@@ -163,4 +195,8 @@ window.addEventListener('DOMContentLoaded', function () {
       },
     },
   });
+
+  if (elevatorSelect) {
+    elevatorSelect.addEventListener('change', updateChartByElevator);
+  }
 });
