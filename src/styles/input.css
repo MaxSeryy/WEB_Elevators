@@ -54,13 +54,12 @@
     }
 
     .card {
-        @apply w-[168px] h-[168px] md:w-auto md:h-auto mx-auto bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
+        @apply w-[168px] h-[168px] md:w-full md:h-auto mx-auto bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
         @apply dark:text-slate-100;
     }
 
     @media (max-width: 767px) {
         .card {
-            background-color: #bdbdbd;
             border-radius: 10px;
             padding: 14px 12px;
         }
@@ -180,5 +179,29 @@
 
     .chart-x-title {
         @apply mt-3 text-xs md:text-sm text-center text-slate-700 dark:text-slate-200;
+    }
+
+    .elevator-card {
+        transition: box-shadow 0.35s ease;
+    }
+
+    .elevator-card.is-moving {
+        @apply shadow-md;
+    }
+
+    .status-update {
+        animation: valueFlash 0.35s ease;
+    }
+
+    @keyframes valueFlash {
+        0% {
+            opacity: 0.45;
+            transform: translateY(-1px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
