@@ -54,8 +54,16 @@
     }
 
     .card {
-        @apply bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
+        @apply w-[168px] h-[168px] md:w-auto md:h-auto mx-auto bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
         @apply dark:text-slate-100;
+    }
+
+    @media (max-width: 767px) {
+        .card {
+            background-color: #bdbdbd;
+            border-radius: 10px;
+            padding: 14px 12px;
+        }
     }
 
     .numbers {
@@ -90,6 +98,18 @@
 
     .mobile-sidebar.open {
         transform: translateX(0);
+    }
+
+    .mobile-sidebar-top {
+        @apply px-8 pt-8;
+    }
+
+    .mobile-sidebar-content {
+        margin-top: 80px;
+    }
+
+    .mobile-sidebar-content .brand-heading {
+        margin-bottom: 160px;
     }
 
     .chart-shell {

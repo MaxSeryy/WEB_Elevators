@@ -15,30 +15,28 @@
   <div id="mobile-sidebar-backdrop" class="mobile-backdrop"></div>
 
   <aside id="mobile-sidebar" class="mobile-sidebar" aria-hidden="true">
-    <div class="p-6 space-y-8">
-      <div class="flex items-center justify-between">
-        <h2 class="brand-normal-a mb-0">Меню</h2>
-        <button id="mobile-menu-close"
-          class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center"
-          aria-label="Закрити меню">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
+    <div class="mobile-sidebar-top">
+      <button id="mobile-menu-close" class="w-7 h-7 text-sky-500" aria-label="Закрити меню">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+          class="size-7">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 19.5-7.5-7.5 7.5-7.5" />
+        </svg>
+      </button>
 
-      <nav>
-        <ul class="space-y-4">
-          <li><a href="../index.html" class="brand-normal">Головна</a></li>
-          <li><a href="./stats.html" class="brand-normal-a">Статистика</a></li>
-          <li><a href="#" class="brand-normal">Налаштування</a></li>
-        </ul>
-      </nav>
+      <div class="mobile-sidebar-content">
+        <h1 class="brand-heading">Elevator<br>Control</h1>
+        <nav>
+          <ul class="space-y-4">
+            <li><a href="../index.html" class="brand-normal">Головна</a></li>
+            <li><a href="./stats.html" class="brand-normal-a">Статистика</a></li>
+            <li><a href="#" class="brand-normal">Налаштування</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
 
     <div class="p-6">
-      <a href="#" class="brand-normal">Мобільна версія</a>
+      <a href="#" class="brand-normal">ПК версія</a>
     </div>
   </aside>
 
@@ -59,20 +57,20 @@
   </aside>
 
   <div class="flex-1 flex flex-col h-full overflow-y-auto">
-    <header class="flex items-center p-4 md:p-8">
+    <header class="flex items-center px-8 pt-8 pb-4 md:p-8">
       <button id="mobile-menu-toggle"
-        class="md:hidden w-10 h-10 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 duration-300"
+        class="md:hidden w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 duration-300"
         aria-label="Відкрити меню">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6">
+          class="size-7">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
         </svg>
       </button>
 
       <button id="theme-toggle"
-        class="ml-auto w-10 h-10 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 transition duration-300"
+        class="ml-auto w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 transition duration-300"
         aria-label="Toggle dark mode">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-800 dark:text-slate-100" fill="none"
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 md:h-6 md:w-6 text-slate-800 dark:text-slate-100" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
           <path data-icon="moon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
