@@ -40,9 +40,6 @@ window.LogsManager = (function () {
     while (logsContainer.children.length > maxLogs) {
       logsContainer.removeChild(logsContainer.firstChild);
     }
-
-    // Auto-scroll to bottom
-    logsContainer.scrollTop = logsContainer.scrollHeight;
   }
 
   function clearLogs() {
@@ -60,6 +57,6 @@ window.LogsManager = (function () {
 // Initialize with system start
 window.addEventListener('DOMContentLoaded', function () {
   if (window.LogsManager) {
-    window.LogsManager.addLog('✓ Система запущена', 'action');
+    window.LogsManager.addLog('Система запущена', 'action');
   }
 });

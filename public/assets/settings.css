@@ -57,6 +57,12 @@
   font-size: 0.875rem;
 }
 
+.logs-container-scroll {
+  height: 12rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 .log-entry {
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(148, 163, 184, 0.3);

@@ -174,7 +174,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var elevatorId = event.detail.elevatorId;
     var floor = event.detail.floor;
     if (window.LogsManager) {
-      window.LogsManager.addLog('📍 Ліфт №' + elevatorId + ' прибув на поверх ' + floor, 'action');
+      window.LogsManager.addLog('Ліфт №' + elevatorId + ' прибув на поверх ' + floor, 'action');
     }
   });
 });
