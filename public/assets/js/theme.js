@@ -113,7 +113,7 @@
     var htmlElement = document.documentElement;
 
     if (!themeToggleBtn) {
-      return { setTheme: function () {} };
+      return { setTheme: function () { } };
     }
 
     var moon = themeToggleBtn.querySelector('[data-icon="moon"]');
