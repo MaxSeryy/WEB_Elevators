@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
   var minFloor = 1;
   var maxFloor = 7;
   var tickMs = 1800;
+  var elevatorIntervalId = null;
   var directionPathByState = {
     up: 'M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18',
     down: 'M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3',
@@ -120,8 +121,22 @@ window.addEventListener('DOMContentLoaded', function () {
           lift.targetFloor = randomTarget(lift.currentFloor);
           lift.idleTicks = 1;
         }
+
+        // Emit event on arrival
+        if (lift.justArrived !== lift.currentFloor) {
+          var elevatorId = lift.card.getAttribute('data-elevator-id');
+          var event = new CustomEvent('elevatorArrived', {
+            detail: {
+              elevatorId: elevatorId,
+              floor: lift.currentFloor,
+            },
+          });
+          window.dispatchEvent(event);
+          lift.justArrived = lift.currentFloor;
+        }
       } else {
         lift.doorOpen = false;
+        lift.justArrived = null;
         direction = lift.targetFloor > lift.currentFloor ? 'up' : 'down';
         lift.currentFloor += direction === 'up' ? 1 : -1;
         lift.card.classList.add('is-moving');
@@ -135,5 +150,31 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   tickElevators();
-  window.setInterval(tickElevators, tickMs);
+  elevatorIntervalId = window.setInterval(tickElevators, tickMs);
+
+  // Listen for settings changes
+  window.addEventListener('settingsChanged', function (event) {
+    var settings = event.detail;
+    maxFloor = settings.maxFloor;
+    tickMs = settings.updateInterval;
+
+    // Restart interval with new timing
+    if (elevatorIntervalId) {
+      window.clearInterval(elevatorIntervalId);
+    }
+    elevatorIntervalId = window.setInterval(tickElevators, tickMs);
+
+    if (window.LogsManager) {
+      window.LogsManager.addLog('⚡ Інтервал оновлення: ' + tickMs + 'мс, макс поверх: ' + maxFloor, 'info');
+    }
+  });
+
+  // Log elevator arrivals
+  window.addEventListener('elevatorArrived', function (event) {
+    var elevatorId = event.detail.elevatorId;
+    var floor = event.detail.floor;
+    if (window.LogsManager) {
+      window.LogsManager.addLog('📍 Ліфт №' + elevatorId + ' прибув на поверх ' + floor, 'action');
+    }
+  });
 });
