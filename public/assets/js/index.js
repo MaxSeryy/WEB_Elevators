@@ -1,19 +1,24 @@
+// init theme and sidebar
 window.addEventListener('DOMContentLoaded', function () {
   if (window.AppTheme) {
     window.AppTheme.initThemeToggle();
     window.AppTheme.initMobileSidebar();
   }
 
+  // elevator settings
   var minFloor = 1;
   var maxFloor = 7;
-  var tickMs = 1800;
+  var tickMs = 1800; // update interval
   var elevatorIntervalId = null;
+
+  // svg paths for direction arrows
   var directionPathByState = {
     up: 'M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18',
     down: 'M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3',
     idle: 'M6 12h12',
   };
 
+  // generate random floor different from current
   function randomTarget(currentFloor) {
     var nextFloor = currentFloor;
     while (nextFloor === currentFloor) {
@@ -22,6 +27,7 @@ window.addEventListener('DOMContentLoaded', function () {
     return nextFloor;
   }
 
+  // add pulse animation to element
   function pulseValue(element) {
     if (!element) {
       return;
@@ -33,6 +39,7 @@ window.addEventListener('DOMContentLoaded', function () {
     element.classList.add('status-update');
   }
 
+  // update door status and color
   function updateDoorText(doorElement, isOpen) {
     if (!doorElement) {
       return;
@@ -48,6 +55,7 @@ window.addEventListener('DOMContentLoaded', function () {
     doorElement.classList.toggle('brand-small-green', !isOpen);
   }
 
+  // update floor number
   function updateFloorText(floorElement, floorValue) {
     if (!floorElement) {
       return;
@@ -60,6 +68,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // change arrow direction svg path
   function updateDirection(pathElement, directionState) {
     if (!pathElement) {
       return;
@@ -68,6 +77,7 @@ window.addEventListener('DOMContentLoaded', function () {
     pathElement.setAttribute('d', directionPathByState[directionState] || directionPathByState.idle);
   }
 
+  // highlight active floor in visual column
   function updateColumnAccent(columnElement, floorValue) {
     if (!columnElement) {
       return;
@@ -83,8 +93,10 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // get all number columns for visual display
   var numberColumns = Array.prototype.slice.call(document.querySelectorAll('.numbers'));
 
+  // init all elevators with initial state
   var elevatorStates = Array.prototype.slice.call(document.querySelectorAll('.elevator-card')).map(function (card, index) {
     var initialFloor = Number(card.getAttribute('data-initial-floor')) || minFloor;
     var floorElement = card.querySelector('.floor-value');
@@ -107,10 +119,12 @@ window.addEventListener('DOMContentLoaded', function () {
     };
   });
 
+  // main loop - update all elevators each tick
   function tickElevators() {
     elevatorStates.forEach(function (lift) {
       var direction = 'idle';
 
+      // elevator reached target floor
       if (lift.currentFloor === lift.targetFloor) {
         lift.doorOpen = true;
         lift.card.classList.remove('is-moving');
@@ -135,6 +149,7 @@ window.addEventListener('DOMContentLoaded', function () {
           lift.justArrived = lift.currentFloor;
         }
       } else {
+        // elevator is moving to target
         lift.doorOpen = false;
         lift.justArrived = null;
         direction = lift.targetFloor > lift.currentFloor ? 'up' : 'down';
@@ -149,6 +164,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // start simulation
   tickElevators();
   elevatorIntervalId = window.setInterval(tickElevators, tickMs);
 

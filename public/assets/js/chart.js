@@ -1,6 +1,9 @@
+// chart.js integration for elevator movement visualization
 window.ElevatorChart = (function () {
   var chartInstance = null;
-  var maxDataPoints = 20;
+  var maxDataPoints = 20; // show last 20 points
+
+  // data storage for each elevator
   var elevatorData = {
     1: [],
     2: [],
@@ -9,6 +12,7 @@ window.ElevatorChart = (function () {
   };
   var timeLabels = [];
 
+  // color scheme for each elevator line
   var elevatorColors = {
     1: { border: 'rgb(59, 130, 246)', background: 'rgba(59, 130, 246, 0.1)' },
     2: { border: 'rgb(16, 185, 129)', background: 'rgba(16, 185, 129, 0.1)' },
@@ -16,10 +20,12 @@ window.ElevatorChart = (function () {
     4: { border: 'rgb(168, 85, 247)', background: 'rgba(168, 85, 247, 0.1)' },
   };
 
+  // check if dark mode is active
   function isDarkMode() {
     return document.documentElement.classList.contains('dark');
   }
 
+  // get colors based on current theme
   function getChartColors() {
     var isDark = isDarkMode();
     return {
@@ -28,6 +34,7 @@ window.ElevatorChart = (function () {
     };
   }
 
+  // initialize chart with config
   function initChart() {
     var canvas = document.getElementById('elevator-chart');
     if (!canvas) {
@@ -166,6 +173,7 @@ window.ElevatorChart = (function () {
     });
   }
 
+  // update chart colors when theme changes
   function updateChartColors() {
     if (!chartInstance) {
       return;
@@ -193,6 +201,7 @@ window.ElevatorChart = (function () {
     chartInstance.update();
   }
 
+  // add new data point when elevator arrives
   function addDataPoint(elevatorId, floor) {
     var now = new Date();
     var timeString = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
@@ -203,9 +212,11 @@ window.ElevatorChart = (function () {
 
     elevatorData[elevatorId].push(floor);
 
+    // update time labels only once per tick (for elevator 1)
     if (elevatorId === '1') {
       timeLabels.push(timeString);
 
+      // keep only last 20 data points
       if (timeLabels.length > maxDataPoints) {
         timeLabels.shift();
         Object.keys(elevatorData).forEach(function (id) {
@@ -214,21 +225,24 @@ window.ElevatorChart = (function () {
       }
     }
 
+    // update chart without animation for smooth performance
     if (chartInstance) {
       chartInstance.update('none');
     }
   }
 
-  // chart on DOM load
+  // init chart and event listeners on page load
   window.addEventListener('DOMContentLoaded', function () {
     initChart();
 
+    // listen to elevator arrival events
     window.addEventListener('elevatorArrived', function (event) {
       var elevatorId = event.detail.elevatorId;
       var floor = event.detail.floor;
       addDataPoint(elevatorId, floor);
     });
 
+    // update colors on theme change
     var themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
       themeToggle.addEventListener('click', function () {

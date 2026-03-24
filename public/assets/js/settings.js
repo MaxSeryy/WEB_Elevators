@@ -1,4 +1,6 @@
+// settings modal manager
 window.SettingsManager = (function () {
+  // dom elements
   var modal = document.getElementById('settings-modal');
   var form = document.getElementById('settings-form');
   var closeBtn = document.getElementById('settings-close');
@@ -10,18 +12,21 @@ window.SettingsManager = (function () {
     document.getElementById('settings-link-mobile'),
   ];
 
+  // input fields
   var inputs = {
     deviceName: document.getElementById('device-name'),
     maxFloor: document.getElementById('max-floor'),
     updateInterval: document.getElementById('update-interval'),
   };
 
+  // default values
   var currentSettings = {
     deviceName: 'Elevator Control System',
     maxFloor: 7,
     updateInterval: 1800,
   };
 
+  // load settings from localStorage
   function loadSettings() {
     try {
       var stored = localStorage.getItem('elevatorSettings');
@@ -39,6 +44,7 @@ window.SettingsManager = (function () {
     if (inputs.updateInterval) inputs.updateInterval.value = currentSettings.updateInterval;
   }
 
+  // save to localStorage
   function saveSettings(settings) {
     try {
       localStorage.setItem('elevatorSettings', JSON.stringify(settings));
@@ -47,6 +53,7 @@ window.SettingsManager = (function () {
     }
   }
 
+  // show success or error message
   function showMessage(text, type) {
     if (!settingsMessage) return;
 
@@ -72,10 +79,11 @@ window.SettingsManager = (function () {
     document.body.classList.remove('overflow-hidden');
   }
 
+  // form submit handler with validation
   function handleSubmit(event) {
     event.preventDefault();
 
-    // Validation
+    // validate inputs
     var deviceName = inputs.deviceName.value.trim();
     var maxFloor = parseInt(inputs.maxFloor.value, 10);
     var updateInterval = parseInt(inputs.updateInterval.value, 10);
@@ -104,7 +112,7 @@ window.SettingsManager = (function () {
 
     saveSettings(currentSettings);
 
-    // Emit custom event for other components
+    // notify other components about settings change
     var event = new CustomEvent('settingsChanged', {
       detail: currentSettings,
     });
@@ -119,7 +127,7 @@ window.SettingsManager = (function () {
     setTimeout(closeModal, 1500);
   }
 
-  // Event listeners
+  // attach event listeners
   if (settingsLinks.length) {
     settingsLinks.forEach(function (link) {
       if (link) {
@@ -147,14 +155,14 @@ window.SettingsManager = (function () {
     form.addEventListener('submit', handleSubmit);
   }
 
-  // Close modal on Escape key
+  // close modal on escape key
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape' && modal && modal.classList.contains('open')) {
       closeModal();
     }
   });
 
-  // Load settings on page load
+  // init settings on page load
   loadSettings();
 
   return {

@@ -1,7 +1,9 @@
+// event logs manager
 window.LogsManager = (function () {
   var logsContainer = document.getElementById('logs-container');
   var maxLogs = 50;
 
+  // format current time as HH:MM:SS
   function getTime() {
     var now = new Date();
     var hours = String(now.getHours()).padStart(2, '0');
@@ -10,9 +12,11 @@ window.LogsManager = (function () {
     return hours + ':' + minutes + ':' + seconds;
   }
 
+  // add new log entry with timestamp
   function addLog(action, type) {
     type = type || 'info';
 
+    // create log entry element
     var entry = document.createElement('div');
     entry.className = 'log-entry';
 
@@ -29,7 +33,7 @@ window.LogsManager = (function () {
 
     if (!logsContainer) return;
 
-    // Clear placeholder if it exists
+    // remove placeholder if exists
     if (logsContainer.children.length === 1 && logsContainer.querySelector('div[style*="text-center"]')) {
       logsContainer.innerHTML = '';
     }
@@ -54,7 +58,7 @@ window.LogsManager = (function () {
   };
 })();
 
-// Initialize with system start
+// log system startup on page load
 window.addEventListener('DOMContentLoaded', function () {
   if (window.LogsManager) {
     window.LogsManager.addLog('Система запущена', 'action');
