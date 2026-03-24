@@ -10,6 +10,7 @@
 
     <link href="./assets/output.css" rel="stylesheet">
     <link href="./assets/settings.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-brand-bg text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex h-screen overflow-hidden">
@@ -196,6 +197,14 @@
 
             </section>
 
+            <!-- chart -->
+            <section class="mb-12 mt-12">
+                <h2 class="brand-normal mb-6 mt-6">Історія руху ліфтів</h2>
+                <div class="bg-slate-300 dark:bg-slate-800 rounded-3xl p-6 shadow-sm">
+                    <canvas id="elevator-chart" style="max-height: 400px;"></canvas>
+                </div>
+            </section>
+
             <!-- logs -->
             <section class="mb-12">
                 <h2 class="brand-normal mb-6 mt-6">Журнал подій</h2>
@@ -263,6 +272,7 @@
     <script src="./assets/js/theme.js" defer></script>
     <script src="./assets/js/settings.js" defer></script>
     <script src="./assets/js/logs.js" defer></script>
+    <script src="./assets/js/chart.js" defer></script>
     <script src="./assets/js/index.js" defer></script>
 
 </body>
