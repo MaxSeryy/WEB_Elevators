@@ -10,7 +10,7 @@ export default function HomePage({ settings, dashboard, onToggleAlarm }) {
   return (
     <main className="px-4 md:px-12 pb-12 flex-1 max-w-6xl mx-auto w-full">
       <section className="mb-10 mt-2 md:mt-0">
-        <div className="bg-slate-300 dark:bg-slate-800 rounded-3xl p-5 shadow-sm flex flex-wrap items-center gap-4 justify-between max-w-4xl mx-auto">
+        <div className="bg-slate-300 dark:bg-slate-800 rounded-3xl p-5 shadow-sm flex flex-wrap items-center gap-4 justify-between w-full max-w-[440px] md:max-w-[560px] mx-auto">
           <div>
             <h2 className="brand-normal mb-1">{settings.deviceName || 'Elevator Control System'}</h2>
             <p className="brand-small">Стан тривоги: <span className={isAlarmActive ? 'brand-small-red' : 'brand-small-green'}>{isAlarmActive ? 'активна' : 'вимкнена'}</span></p>
@@ -20,16 +20,16 @@ export default function HomePage({ settings, dashboard, onToggleAlarm }) {
             onClick={onToggleAlarm}
             className={`px-5 py-2 rounded-lg font-medium transition ${isAlarmActive ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-green-600 text-white hover:bg-green-700'}`}
           >
-            {isAlarmActive ? 'Mute' : 'Unmute'}
+            {isAlarmActive ? 'Вимкнути' : 'Увімкнути'}
           </button>
         </div>
       </section>
 
       <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-        <SensorCard label="Voltage" value={sensors.voltage} unit="V" />
-        <SensorCard label="Temperature" value={sensors.temperature} unit="°C" isDanger={sensors.temperature > 50} />
-        <SensorCard label="Load" value={sensors.load} unit="%" isDanger={sensors.load > 85} />
-        <SensorCard label="Speed" value={sensors.speed} unit="m/s" />
+        <SensorCard label="Напруга" value={sensors.voltage} unit="V" />
+        <SensorCard label="Температура" value={sensors.temperature} unit="°C" isDanger={sensors.temperature > 50} />
+        <SensorCard label="Навантаження" value={sensors.load} unit="%" isDanger={sensors.load > 85} />
+        <SensorCard label="Швидкість" value={sensors.speed} unit="м/с" />
       </section>
 
       <section className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">

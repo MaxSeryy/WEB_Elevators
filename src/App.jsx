@@ -119,6 +119,21 @@ export default function App() {
   useEffect(() => {
     const timerId = window.setInterval(() => {
       setSystemState((prev) => {
+        if (prev.dashboard.isAlarmActive) {
+          return {
+            ...prev,
+            dashboard: {
+              ...prev.dashboard,
+              elevators: prev.dashboard.elevators.map((lift) => ({
+                ...lift,
+                doorOpen: true,
+                direction: 'idle',
+                idleTicks: 1,
+              })),
+            },
+          };
+        }
+
         const arrivedMessages = [];
 
         const nextElevators = prev.dashboard.elevators.map((lift) => {
