@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronLeft } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 function navClass(isActive) {
@@ -28,9 +29,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile, onOpenSettings }) {
             aria-label="Закрити меню"
             onClick={onCloseMobile}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 19.5-7.5-7.5 7.5-7.5" />
-            </svg>
+            <ChevronLeft size={20} />
           </button>
 
           <div className="mobile-sidebar-content">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
 
 export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
   const [form, setForm] = useState(settings);
@@ -41,9 +42,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
             aria-label="Закрити"
             onClick={onClose}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
+            <X size={20} />
           </button>
         </div>
 
@@ -55,7 +54,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
               type="text"
               value={form.deviceName}
               onChange={(event) => setForm((prev) => ({ ...prev, deviceName: event.target.value }))}
-              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-300 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
           </div>
 
@@ -68,7 +67,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
               max="20"
               value={form.maxFloor}
               onChange={(event) => setForm((prev) => ({ ...prev, maxFloor: Number(event.target.value) }))}
-              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
           </div>
 
@@ -82,7 +81,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
               step="100"
               value={form.updateInterval}
               onChange={(event) => setForm((prev) => ({ ...prev, updateInterval: Number(event.target.value) }))}
-              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 border border-slate-400 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
           </div>
 
