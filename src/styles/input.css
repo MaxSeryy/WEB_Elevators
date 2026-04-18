@@ -54,7 +54,7 @@
     }
 
     .card {
-        @apply w-[168px] h-[168px] md:w-full md:h-auto mx-auto bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
+        @apply w-full h-[168px] md:w-full md:h-auto mx-auto bg-slate-300 dark:bg-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow duration-300;
         @apply dark:text-slate-100;
     }
 
