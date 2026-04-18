@@ -1,0 +1,129 @@
+/* Settings Modal */
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.settings-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.settings-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.45);
+}
+
+.settings-modal-content {
+  position: relative;
+  z-index: 10;
+  background-color: rgb(203, 213, 225);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.dark .settings-modal-content {
+  background-color: rgb(30, 41, 59);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Logs container styling */
+#logs-container {
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.logs-container-scroll {
+  height: 12rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.log-entry {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  animation: slideInLog 0.3s ease;
+  word-break: break-word;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-timestamp {
+  color: rgb(59, 130, 246);
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.log-action {
+  color: rgb(22, 163, 74);
+}
+
+.log-error {
+  color: rgb(220, 38, 38);
+}
+
+.log-info {
+  color: rgb(51, 65, 85);
+}
+
+.dark .log-info {
+  color: rgb(203, 213, 225);
+}
+
+@keyframes slideInLog {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Success message */
+.settings-success {
+  color: rgb(22, 163, 74);
+  font-weight: 500;
+}
+
+.dark .settings-success {
+  color: rgb(74, 222, 128);
+}
+
+.settings-error {
+  color: rgb(220, 38, 38);
+  font-weight: 500;
+}
+
+.dark .settings-error {
+  color: rgb(248, 113, 113);
+}

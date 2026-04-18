@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elevator Control — Статистика</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="../assets/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-brand-bg text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex h-screen overflow-hidden">
+
+  <div id="mobile-sidebar-backdrop" class="mobile-backdrop"></div>
+
+  <aside id="mobile-sidebar" class="mobile-sidebar" aria-hidden="true">
+    <div class="mobile-sidebar-top">
+      <button id="mobile-menu-close"
+        class="w-10 h-10 rounded-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-100 flex items-center justify-center"
+        aria-label="Закрити меню">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+          class="size-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 19.5-7.5-7.5 7.5-7.5" />
+        </svg>
+      </button>
+
+      <div class="mobile-sidebar-content">
+        <h1 class="brand-heading">Elevator<br>Control</h1>
+        <nav>
+          <ul class="space-y-4">
+            <li><a href="../index.html" class="brand-normal">Головна</a></li>
+            <li><a href="./stats.html" class="brand-normal-a">Статистика</a></li>
+            <li><a href="#" class="brand-normal">Налаштування</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- <div class="p-6">
+      <a href="#" class="brand-normal">ПК версія</a>
+    </div> -->
+  </aside>
+
+  <aside class="sidebar">
+    <div class="p-8">
+      <h1 class="brand-heading">Elevator<br>Control</h1>
+      <nav>
+        <ul class="space-y-4">
+          <li><a href="../index.html" class="brand-normal">Головна</a></li>
+          <li><a href="./stats.html" class="brand-normal-a">Статистика</a></li>
+          <li><a href="#" class="brand-normal">Налаштування</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- <div class="p-8">
+      <a href="#" class="brand-normal">Мобільна версія</a>
+    </div> -->
+  </aside>
+
+  <div class="flex-1 flex flex-col h-full overflow-y-auto">
+    <header class="flex items-center px-8 pt-8 pb-0 md:p-8">
+      <button id="mobile-menu-toggle"
+        class="md:hidden w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 duration-300"
+        aria-label="Відкрити меню">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="size-7">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+
+      <button id="theme-toggle"
+        class="ml-auto w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded-full flex items-center justify-center hover:bg-slate-400 dark:hover:bg-slate-600 transition duration-300"
+        aria-label="Toggle dark mode">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 md:h-6 md:w-6 text-slate-800 dark:text-slate-100"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path data-icon="moon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          <path data-icon="sun" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.36 6.36-1.42-1.42M7.05 7.05 5.64 5.64m12.72 0-1.41 1.41M7.05 16.95 5.64 18.36M12 8a4 4 0 100 8 4 4 0 000-8z" />
+        </svg>
+      </button>
+    </header>
+
+    <main class="px-6 pt-2 md:pt-0 md:px-12 pb-12 flex-1 max-w-6xl mx-auto w-full">
+      <section class="mb-12">
+        <div class="mt-6 mb-8 md:mb-6 flex items-center justify-center gap-3 flex-wrap text-center">
+          <h2 class="brand-normal mb-0">Статистика навантаження для ліфту:</h2>
+          <label for="elevator-select" class="sr-only">Оберіть номер ліфту</label>
+          <select id="elevator-select"
+            class="h-11 rounded-lg border border-slate-400 dark:border-slate-600 bg-white dark:bg-slate-700 px-4 text-base text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-accent">
+            <option value="1">Ліфт №1</option>
+            <option value="2">Ліфт №2</option>
+            <option value="3">Ліфт №3</option>
+            <option value="4">Ліфт №4</option>
+          </select>
+        </div>
+
+        <div class="bg-slate-300 dark:bg-slate-800 rounded-3xl p-4 md:p-8 shadow-sm">
+          <div class="chart-shell">
+            <div class="chart-y-column">
+              <div class="chart-y-title">Навантаження (%)</div>
+              <ul class="chart-y-scale">
+                <li>100</li>
+                <li>80</li>
+                <li>60</li>
+                <li>40</li>
+                <li>20</li>
+                <li>0</li>
+              </ul>
+            </div>
+
+            <div class="chart-scroll-wrap">
+              <div id="chart-scroll" class="chart-scroll-area">
+                <div id="chart-content" class="chart-scroll-content">
+                  <canvas id="loadChart" height="320"></canvas>
+                </div>
+              </div>
+              <p class="chart-x-title">Час (години)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../assets/js/theme.js" defer></script>
+  <script src="../assets/js/stats.js" defer></script>
+
+</body>
+
+</html>

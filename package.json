@@ -2,14 +2,22 @@
   "name": "l2",
   "version": "1.0.0",
   "description": "",
-  "main": "public/index.html",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "build:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/assets/output.css --minify",
-    "watch:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/assets/output.css --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/assets/output.css --watch"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.19"
+    "tailwindcss": "^3.4.19",
+    "vite": "^5.4.19"
   },
   "keywords": [],
   "author": "",
