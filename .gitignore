@@ -1,10 +1,23 @@
 # Node dependencies
 node_modules/
 
+# Build output
+dist/
+build/
+
+# Caches
+.cache/
+.vite/
+.eslintcache
+coverage/
+*.tsbuildinfo
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
 
 # Runtime data
 pids
@@ -22,7 +35,10 @@ pids
 # IDE/editor settings
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS files
 .DS_Store
 Thumbs.db
+Desktop.ini
