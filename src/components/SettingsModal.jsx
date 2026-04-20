@@ -11,7 +11,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
     setMessage('');
   }, [settings, isOpen]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (form.maxFloor < 2 || form.maxFloor > 20) {
@@ -26,9 +26,14 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
       return;
     }
 
-    onSave(form);
-    setMessage('Налаштування збережено.');
-    setMessageType('success');
+    try {
+      await onSave(form);
+      setMessage('Налаштування збережено.');
+      setMessageType('success');
+    } catch (_error) {
+      setMessage('Connection Lost');
+      setMessageType('error');
+    }
   }
 
   return (

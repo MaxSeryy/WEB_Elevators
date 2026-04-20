@@ -42,13 +42,13 @@ const initialElevators = [
   { id: 4, currentFloor: 6, targetFloor: 1, doorOpen: false, direction: 'down', idleTicks: 1 },
 ];
 
-function Shell({ children, isDark, onToggleTheme, mobileOpen, onOpenMobile, onCloseMobile, onOpenSettings }) {
+function Shell({ children, isDark, onToggleTheme, mobileOpen, onOpenMobile, onCloseMobile, onOpenSettings, connectionLost }) {
   return (
     <div className="bg-brand-bg text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex h-screen overflow-hidden">
       <Sidebar mobileOpen={mobileOpen} onCloseMobile={onCloseMobile} onOpenSettings={onOpenSettings} />
 
       <div className="flex-1 flex flex-col h-full overflow-y-auto">
-        <Header isDark={isDark} onToggleTheme={onToggleTheme} onToggleMobileMenu={onOpenMobile} />
+        <Header isDark={isDark} onToggleTheme={onToggleTheme} onToggleMobileMenu={onOpenMobile} connectionLost={connectionLost} />
         {children}
       </div>
     </div>
@@ -61,6 +61,7 @@ export default function App() {
       isDark: true,
       mobileOpen: false,
       isSettingsOpen: false,
+      connectionLost: false,
     },
     settings: {
       deviceName: 'Elevator Control System',
@@ -68,7 +69,7 @@ export default function App() {
       updateInterval: 1800,
     },
     dashboard: {
-      isAlarmActive: true,
+      isAlarmActive: false,
       sensors: {
         voltage: 220,
         temperature: 45,
@@ -253,7 +254,45 @@ export default function App() {
     });
   }
 
-  function handleSaveSettings(nextSettings) {
+  async function handleSaveSettings(nextSettings) {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/settings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          deviceName: nextSettings.deviceName,
+          maxFloor: nextSettings.maxFloor,
+          updateIntervalSec: Math.round(nextSettings.updateInterval / 1000),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Settings request failed: ${response.status}`);
+      }
+
+      setSystemState((prev) => ({
+        ...prev,
+        ui: {
+          ...prev.ui,
+          connectionLost: false,
+        },
+      }));
+    } catch (_error) {
+      setSystemState((prev) => ({
+        ...prev,
+        ui: {
+          ...prev.ui,
+          connectionLost: true,
+        },
+      }));
+
+      throw new Error('Connection Lost');
+    }
+
     setSystemState((prev) => {
       let nextLogs = appendLog(
         prev.dashboard.logs,
@@ -290,6 +329,7 @@ export default function App() {
               onOpenMobile={handleOpenMobile}
               onCloseMobile={handleCloseMobile}
               onOpenSettings={handleOpenSettings}
+              connectionLost={systemState.ui.connectionLost}
             >
               <HomePage
                 settings={systemState.settings}
@@ -310,6 +350,7 @@ export default function App() {
               onOpenMobile={handleOpenMobile}
               onCloseMobile={handleCloseMobile}
               onOpenSettings={handleOpenSettings}
+              connectionLost={systemState.ui.connectionLost}
             >
               <StatsPage isDark={systemState.ui.isDark} />
             </Shell>
