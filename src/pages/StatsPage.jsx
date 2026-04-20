@@ -29,7 +29,11 @@ function themeColors(isDark) {
 
 export default function StatsPage({ isDark }) {
   const canvasRef = useRef(null);
+  const scrollAreaRef = useRef(null);
   const chartRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartScrollLeftRef = useRef(0);
   const [selectedElevator, setSelectedElevator] = useState(1);
 
   const selectedData = useMemo(() => {
@@ -122,6 +126,52 @@ export default function StatsPage({ isDark }) {
     chartRef.current.update();
   }, [selectedElevator, selectedData, isDark]);
 
+  useEffect(() => {
+    const container = scrollAreaRef.current;
+    if (!container) {
+      return undefined;
+    }
+
+    function handleMouseDown(event) {
+      if (event.button !== 0) {
+        return;
+      }
+
+      isDraggingRef.current = true;
+      dragStartXRef.current = event.clientX;
+      dragStartScrollLeftRef.current = container.scrollLeft;
+      container.classList.add('dragging');
+      event.preventDefault();
+    }
+
+    function handleMouseMove(event) {
+      if (!isDraggingRef.current) {
+        return;
+      }
+
+      const delta = event.clientX - dragStartXRef.current;
+      container.scrollLeft = dragStartScrollLeftRef.current - delta;
+      event.preventDefault();
+    }
+
+    function stopDragging() {
+      isDraggingRef.current = false;
+      container.classList.remove('dragging');
+    }
+
+    container.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', stopDragging);
+    container.addEventListener('mouseleave', stopDragging);
+
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', stopDragging);
+      container.removeEventListener('mouseleave', stopDragging);
+    };
+  }, []);
+
   return (
     <main className="px-6 pt-2 md:pt-0 md:px-12 pb-12 flex-1 max-w-6xl mx-auto w-full">
       <section className="mb-12">
@@ -156,7 +206,7 @@ export default function StatsPage({ isDark }) {
             </div>
 
             <div className="chart-scroll-wrap">
-              <div className="chart-scroll-area">
+              <div ref={scrollAreaRef} className="chart-scroll-area">
                 <div className="chart-scroll-content">
                   <canvas ref={canvasRef} height="320" />
                 </div>

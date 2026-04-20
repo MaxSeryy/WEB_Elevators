@@ -1,13 +1,29 @@
-## Project for WEB labs
-### Build:
+# WEB Elevators
+
+Минимальный запуск через Docker.
+
+## Quick Start
+
 ```bash
-npm install
-npm run build
-# or
-npm run build:css
+copy .env.example .env
+copy backend\.env.example backend\.env
+docker compose up --build -d
 ```
 
-### Run:
+## URLs
+
+- Frontend: http://localhost:8080
+- Backend API: http://localhost:4000/api/status
+
+## Stop
+
 ```bash
-npm run dev
+docker compose down
+```
+
+## Local Dev (optional)
+
+```bash
+npm install
+cd backend && npm install
 ```

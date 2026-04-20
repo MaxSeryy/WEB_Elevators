@@ -1,8 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const SENSOR_UPDATE_MS = Number(process.env.SENSOR_UPDATE_MS || 5000);
 
 app.use(cors());
 app.use(express.json());
@@ -43,7 +46,7 @@ function emulateSensors() {
   systemState.updatedAt = new Date().toISOString();
 }
 
-setInterval(emulateSensors, 5000);
+setInterval(emulateSensors, SENSOR_UPDATE_MS);
 
 app.get("/api/status", (req, res) => {
   res.json({

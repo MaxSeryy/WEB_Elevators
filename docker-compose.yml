@@ -1,24 +1,41 @@
 services:
-  backend:
+  backend: # API
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: elevators_backend
+      context: ./backend # backend source
+      dockerfile: Dockerfile # backend image
+    container_name: elevators_backend # container name
+    env_file:
+      - ./backend/.env # env vars
     ports:
-      - "4000:4000"
-    environment:
-      - PORT=4000
+      - "${BACKEND_PORT:-4000}:4000" # host:container
+    restart: unless-stopped # auto restart
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4000/api/status').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"] # alive check
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
-  frontend:
+  frontend: # web UI
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: elevators_frontend
+      context: . # frontend source
+      dockerfile: Dockerfile # frontend image
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:4000} # API URL
+    container_name: elevators_frontend # container name
     ports:
-      - "8080:80"
+      - "${FRONTEND_PORT:-8080}:80" # host:container
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy # wait backend
+    restart: unless-stopped # auto restart
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"] # alive check
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
 networks:
   default:
-    name: elevators_network
+    name: elevators_network # shared network
