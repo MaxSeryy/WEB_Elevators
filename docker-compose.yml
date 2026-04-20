@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: elevators_backend
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: elevators_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+networks:
+  default:
+    name: elevators_network
