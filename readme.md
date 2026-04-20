@@ -1,6 +1,6 @@
 # WEB Elevators
 
-Минимальный запуск через Docker.
+Мінімальний запуск через Docker.
 
 ## Quick Start
 
